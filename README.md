@@ -17,21 +17,22 @@ a simple log tool for python.
     message: (any str) log message.  
 
 ## Example:  
-### code
-    write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")  
-#### in CLI  
-    2021-07-29 20:39:07 [INFO] this is Doctor's log, only in CLI.  
-#### in file  
-    None  
 
-### code  
+### both file and CLI code  
     write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, in file and CLI.")  
 #### in CLI  
     2021-07-29 20:39:07 [INFO] this is Doctor's log, in file and CLI.  
 #### in file (Doctor Who-2021-07-29.log)  
     2021-07-29 20:39:07 [INFO] this is Doctor's log, in file and CLI.  
+  
+### only in CLI code
+    write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")  
+#### in CLI  
+    2021-07-29 20:39:07 [INFO] this is Doctor's log, only in CLI.  
+#### in file  
+    None
 
-### code  
+### only in file code  
     write_log('Doctor Who', 'file', 'info', "this is Doctor's log, in file and CLI.")  
 #### in CLI  
     None  
