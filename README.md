@@ -5,7 +5,7 @@ a simple log tool for python.
 ### import  
     import logfly  
 ### use  
-    write_log('name', 'where', 'info', "message.")  
+    logfly.write_log('name', 'where', 'info', "message.")  
 
 ## Description  
     name: (any str) logfile name, you can use diffrent string to create diffrent logfile.  
@@ -19,21 +19,21 @@ a simple log tool for python.
 ## Example:  
 
 ### both file and CLI code  
-    write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, in file and CLI.")  
+    logfly.write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, in file and CLI.")  
 #### in CLI  
     2021-07-29 20:39:07 [INFO] this is Doctor's log, in file and CLI.  
 #### in file (Doctor Who-2021-07-29.log)  
     2021-07-29 20:39:07 [INFO] this is Doctor's log, in file and CLI.  
   
 ### only in CLI code
-    write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")  
+    logfly.write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")  
 #### in CLI  
     2021-07-29 20:39:07 [INFO] this is Doctor's log, only in CLI.  
 #### in file  
     None
 
 ### only in file code  
-    write_log('Doctor Who', 'file', 'info', "this is Doctor's log, in file and CLI.")  
+    logfly.write_log('Doctor Who', 'file', 'info', "this is Doctor's log, in file and CLI.")  
 #### in CLI  
     None  
 #### in file (Doctor Who-2021-07-29.log)  
