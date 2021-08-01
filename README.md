@@ -46,6 +46,6 @@ a simple log tool for python.
 #### in CLI:
     2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.
 #### infile(Doctor Who-20210801165807.log):  
-####log will named in date + time  
+#### p.s.  log will name in date + time  
 
     2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.  
