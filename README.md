@@ -5,7 +5,7 @@ a simple log tool for python.
 ### import  
     import logfly  
 ### use  
-    logfly.write_log('name', 'where', 'info', "message.")  
+    logfly.write_log('name', 'where', 'info', 'message', mode='add')  
 
 ## Description  
     name: (any str) logfile name, you can use diffrent string to create diffrent logfile.  
@@ -15,6 +15,8 @@ a simple log tool for python.
             file means log will only appear in logfile.  
     info: (any str) custom log level, will upper and wrap with '[]'.  
     message: (any str) log message.  
+    mode: ('add', 'new') default is 'add', means log will add in same day.  
+            'new' means logfile will create when program every once.
 
 ## Example:  
 
@@ -37,4 +39,13 @@ a simple log tool for python.
 #### in CLI  
     None  
 #### in file (Doctor Who-2021-07-29.log)  
+    2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.  
+
+#### mode arg:
+    logfly.write_log('Doctor Who', 'file', 'info', "this is Doctor's log, in file and CLI.", mode='new')
+#### in CLI:
+    2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.
+#### infile(Doctor Who-20210801165807.log):  
+####log will named in date + time  
+
     2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.  
