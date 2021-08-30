@@ -27,32 +27,32 @@ def get_time(flag):
 
 
 def write_log(name, position, level, message, mode='add'):
-    global logfile
+    global LOGFILE
     logfolder = '.\\logs\\' + get_time('date') + '\\'
     if mode == 'add':
-        logfile = logfolder + name + '-' + get_time('date') + '.log'
+        LOGFILE = logfolder + name + '-' + get_time('date') + '.log'
     elif mode == 'new':
-        logfile = logfolder + name + '-' + get_time('datetimefile') + '.log'
+        LOGFILE = logfolder + name + '-' + get_time('datetimefile') + '.log'
     create_log_folder()
     if position == 'CLI':
         print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
     if position == 'file':
         if mode == 'add':
-            File = open(logfile, 'a', newline='')
+            File = open(LOGFILE, 'a', newline='')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
         elif mode == 'new':
-            File = open(logfile, 'w', newline='')
+            File = open(LOGFILE, 'w', newline='')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
     if position == 'fileCLI':
         print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
         if mode == 'add':
-            File = open(logfile, 'a', newline='')
+            File = open(LOGFILE, 'a', newline='')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
         elif mode == 'new':
-            File = open(logfile, 'w', newline='')
+            File = open(LOGFILE, 'w', newline='')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
 

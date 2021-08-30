@@ -1,5 +1,8 @@
-# LogFly  
-a simple log tool for python.  
+# logfly  
+### a simple log tool for python  
+
+## position  
+log will create in ./logs/[date] folder.
 
 ## How to  
 ### import  
