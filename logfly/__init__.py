@@ -2,9 +2,9 @@ import time
 import os
 
 
-def create_log_folder():
+def create_log_folder(folder_name):
     dirs = '.\\logs\\'
-    dirs2 = '.\\logs\\' + get_time('date')
+    dirs2 = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
     if not os.path.exists(dirs):
         os.makedirs(dirs)
     else:
@@ -26,14 +26,14 @@ def get_time(flag):
         return time.strftime("%Y%m%d%H%M%S", time.localtime())
 
 
-def write_log(name, position, level, message, mode='add'):
+def write_log(name, position, level, message, mode='add', folder_name='logflys'):
     global LOGFILE
-    logfolder = '.\\logs\\' + get_time('date') + '\\'
+    logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
     if mode == 'add':
         LOGFILE = logfolder + name + '-' + get_time('date') + '.log'
     elif mode == 'new':
         LOGFILE = logfolder + name + '-' + get_time('datetimefile') + '.log'
-    create_log_folder()
+    create_log_folder(folder_name)
     if position == 'CLI':
         print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
     if position == 'file':
@@ -64,3 +64,4 @@ if __name__ == '__main__':
     write_log('Tardis', 'CLI', 'info', "this is Tardis's log, only in CLI.")
     write_log('Tardis', 'fileCLI', 'info', "this is Tardis's log, in file and CLI.")
     write_log('Tardis', 'file', 'info', "this is Tardis's log, only in file.")
+    write_log('Death', 'fileCLI', 'info', "this is Death's log, in file and CLI.", mode='add', folder_name='death')
