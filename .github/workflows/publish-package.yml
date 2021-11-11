@@ -11,7 +11,9 @@ name: Upload Python Package
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
+    paths:
+      - 'setup.py'
   workflow_dispatch:
 
 
