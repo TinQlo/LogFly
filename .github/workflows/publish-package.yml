@@ -16,8 +16,7 @@ on:
       - '/logfly/init.py'
 
 jobs:
-  deploy:
-
+  deploy-mechine:
     runs-on: ubuntu-latest
 
     steps:
