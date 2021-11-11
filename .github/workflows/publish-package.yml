@@ -14,7 +14,7 @@ on:
     branches:
       - 'main'
     paths:
-      - '/logfly/init.py'
+      - 'setup.py'
 
 jobs:
   deploy-mechine:
