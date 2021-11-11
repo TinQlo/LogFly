@@ -2,7 +2,7 @@
 ### a simple log tool by python  
 
 ## position  
-log will create in ./logs/[folder_name]/[date] folder.
+log will create in ./logs/[folder_name]/[date] folder.  QAQ
 
 ## How to  
 ### import  
