@@ -20,7 +20,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "dist"},
-    packages=setuptools.find_packages(where="dist"),
+    package_dir={"": "srcc"},
+    packages=setuptools.find_packages(where="srcc"),
     python_requires=">=3.6",
 )
