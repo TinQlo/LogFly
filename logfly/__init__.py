@@ -65,4 +65,3 @@ if __name__ == '__main__':
     write_log('Tardis', 'fileCLI', 'info', "this is Tardis's log, in file and CLI.")
     write_log('Tardis', 'file', 'info', "this is Tardis's log, only in file.")
     write_log('Death', 'fileCLI', 'info', "this is Death's log, in file and CLI.", mode='add', folder_name='death')
-    # for github workflow test 01

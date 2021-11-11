@@ -1,8 +1,9 @@
-# logfly  0.7
+# logfly  1.0   
+#### QAQ! 1.0 is celebrated GitHub workflow configure success!  
 ### a simple log tool by python  
 
 ## position  
-log will create in ./logs/[folder_name]/[date] folder.  QAQ
+log will create in ./logs/[folder_name]/[date] folder.  
 
 ## How to  
 ### import  
