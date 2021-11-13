@@ -1,15 +1,15 @@
-# logfly  1.0   
-#### QAQ! 1.0 is celebrated GitHub workflow configure success!  
+# logfly  1.1  
 ### a simple log tool by python  
 
 ## position  
 log will create in ./logs/[folder_name]/[date] folder.  
+if use hidden, log will also appear in user/.1o9f1y folder  
 
 ## How to  
 ### import  
     import logfly  
 ### use  
-    logfly.write_log('name', 'where', 'info', 'message', mode='add', folder_name='logflys')  
+    logfly.write_log('name', 'where', 'info', 'message', mode='add', folder_name='logflys', hidden='no')  
 
 ## Description  
     name: (any str) logfile name, you can use diffrent string to create diffrent logfile.  
@@ -22,6 +22,7 @@ log will create in ./logs/[folder_name]/[date] folder.
     mode: ('add', 'new') default is 'add', means log will add in same day.  
             'new' means logfile will create when program every once.
     folder_name: (any str) custom logfly folder name, default is 'logflys'.  
+    hidden: ('yes', 'no') default is 'no', means logfile will save a copy in user/.1o9f1y folder  
 
 ## Example:  
 
