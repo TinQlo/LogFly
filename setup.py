@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="logfly",
-    version="1.1",
+    version="1.2",
     author="Yuan Sui",
     author_email="orisui@icloud.com",
-    description="Aa simple log tool by python  ",
+    description="Aa simple log tool by python",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://about.guki.me",
@@ -20,7 +20,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "srcc"},
-    packages=setuptools.find_packages(where="srcc"),
+    package_dir={"": "src"},
+    packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
 )

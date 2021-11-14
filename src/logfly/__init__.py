@@ -1,3 +1,9 @@
+#####################
+# Author: Yuki Sui
+# Date: 2021-11-14
+# Version: 1.2
+#####################
+
 import time
 import os
 from pathlib import Path
