@@ -1,12 +1,15 @@
 #####################
 # Author: Yuki Sui
-# Date: 2021-11-14
-# Version: 1.2
+# Date: 2021-12-05
+# Version: 1.3
 #####################
 
 import time
 import os
 from pathlib import Path
+from colorama import init
+
+init(autoreset=True)
 
 
 def create_log_folder(folder_name, hidden):
@@ -39,7 +42,7 @@ def get_time(flag):
         return time.strftime("%Y%m%d%H%M%S", time.localtime())
 
 
-def write_log(name, position, level, message, mode='add', folder_name='logflys', hidden='no'):
+def write_log(name, position, level, message, mode='add', folder_name='logflys', hidden='no', color='yes'):
     global LOGFILE, LOGFILE2, logfolder, logfolder_hidden, LOGFILE_hidden
     if hidden == "no":
         logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
@@ -52,10 +55,26 @@ def write_log(name, position, level, message, mode='add', folder_name='logflys',
     elif mode == 'new':
         LOGFILE_hidden = name + '-' + get_time('datetimefile') + '.log'
         LOGFILE = logfolder + name + '-' + get_time('datetimefile') + '.log'
+    else:
+        error()
     create_log_folder(folder_name, hidden)
     if position == 'CLI':
-        print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-    if position == 'file':
+        if color == 'no':
+            print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+        elif color == 'yes':
+            LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
+                            '\r\n '
+            if level == 'info':
+                print(f'\033[0;34m{LogFlyMessage}\033[0m')
+            elif level == 'warning':
+                print(f'\033[0;33m{LogFlyMessage}\033[0m')
+            elif level == 'error':
+                print(f'\033[0;31m{LogFlyMessage}\033[0m')
+            else:
+                print(f'\033[0;37m{LogFlyMessage}\033[0m')
+        else:
+            error()
+    elif position == 'file':
         if mode == 'add':
             File = open(LOGFILE, 'a', newline='')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
@@ -74,8 +93,24 @@ def write_log(name, position, level, message, mode='add', folder_name='logflys',
                 File = open(LOGFILE2, 'a', newline='')
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
-    if position == 'fileCLI':
-        print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+        else:
+            error()
+    elif position == 'fileCLI':
+        if color == 'no':
+            print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+        elif color == 'yes':
+            LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
+                            '\r\n '
+            if level == 'info':
+                print(f'\033[0;34m{LogFlyMessage}\033[0m')
+            elif level == 'warning':
+                print(f'\033[0;33m{LogFlyMessage}\033[0m')
+            elif level == 'error':
+                print(f'\033[0;31m{LogFlyMessage}\033[0m')
+            else:
+                print(f'\033[0;37m{LogFlyMessage}\033[0m')
+        else:
+            error()
         if mode == 'add':
             File = open(LOGFILE, 'a', newline='')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
@@ -94,10 +129,21 @@ def write_log(name, position, level, message, mode='add', folder_name='logflys',
                 File = open(LOGFILE2, 'a', newline='')
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
+        else:
+            error()
+    else:
+        error()
+
+
+def error():
+    logflyErrorMessage = 'your parameter is wrong, please re-check it!'
+    write_log('logfly-log', 'CLI', 'error', logflyErrorMessage)
 
 
 if __name__ == '__main__':
     write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")
+    write_log('Doctor Who', 'CLI', 'warning', "this is Doctor's log, only in CLI.")
+    write_log('Doctor Who', 'CLI', 'error', "this is Doctor's log, only in CLI.")
     write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, in file and CLI.", mode='add')
     write_log('Doctor Who', 'file', 'info', "this is Doctor's log, only in file.")
     write_log('Tardis', 'CLI', 'info', "this is Tardis's log, only in CLI.")
