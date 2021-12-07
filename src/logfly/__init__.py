@@ -1,7 +1,7 @@
 #####################
 # Author: Yuki Sui
 # Date: 2021-12-05
-# Version: 1.3
+# Version: 1.4
 #####################
 
 import time
@@ -64,11 +64,11 @@ def write_log(name, position, level, message, mode='add', folder_name='logflys',
         elif color == 'yes':
             LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
                             '\r\n '
-            if level == 'info':
+            if str.upper(level) == 'INFO':
                 print(f'\033[0;34m{LogFlyMessage}\033[0m')
-            elif level == 'warning':
+            elif str.upper(level) == 'WARNING':
                 print(f'\033[0;33m{LogFlyMessage}\033[0m')
-            elif level == 'error':
+            elif str.upper(level) == 'ERROR':
                 print(f'\033[0;31m{LogFlyMessage}\033[0m')
             else:
                 print(f'\033[0;37m{LogFlyMessage}\033[0m')
@@ -101,11 +101,11 @@ def write_log(name, position, level, message, mode='add', folder_name='logflys',
         elif color == 'yes':
             LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
                             '\r\n '
-            if level == 'info':
+            if str.upper(level) == 'INFO':
                 print(f'\033[0;34m{LogFlyMessage}\033[0m')
-            elif level == 'warning':
+            elif str.upper(level) == 'WARNING':
                 print(f'\033[0;33m{LogFlyMessage}\033[0m')
-            elif level == 'error':
+            elif str.upper(level) == 'ERROR':
                 print(f'\033[0;31m{LogFlyMessage}\033[0m')
             else:
                 print(f'\033[0;37m{LogFlyMessage}\033[0m')
