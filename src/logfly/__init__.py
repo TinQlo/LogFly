@@ -34,11 +34,11 @@ def create_log_folder(folder_name, hidden):
 def get_time(flag):
     if flag == 'datetime':
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    if flag == 'date':
+    elif flag == 'date':
         return time.strftime("%Y-%m-%d", time.localtime())
-    if flag == 'times':
+    elif flag == 'times':
         return time.strftime("%H:%M:%S", time.localtime())
-    if flag == 'datetimefile':
+    elif flag == 'datetimefile':
         return time.strftime("%Y%m%d%H%M%S", time.localtime())
 
 
