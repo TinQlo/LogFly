@@ -1,7 +1,7 @@
 #####################
 # Author: Yuki Sui
-# Date: 2021-12-05
-# Version: 1.4
+# Date: 2021-12-25
+# Version: 1.5
 #####################
 
 import time
@@ -42,8 +42,15 @@ def get_time(flag):
         return time.strftime("%Y%m%d%H%M%S", time.localtime())
 
 
-def write_log(name, position, level, message, mode='add', folder_name='logflys', hidden='no', color='yes'):
+def write_log(name, position, level, message, mode='add',
+              folder_name='logflys', hidden='no', color='yes', str_message='yes'):
     global LOGFILE, LOGFILE2, logfolder, logfolder_hidden, LOGFILE_hidden
+    if str_message == 'yes':
+        message = str(message)
+    elif str_message == 'no':
+        pass
+    else:
+        error()
     if hidden == "no":
         logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
     elif hidden == 'yes':
@@ -136,7 +143,8 @@ def write_log(name, position, level, message, mode='add', folder_name='logflys',
 
 
 def error():
-    logflyErrorMessage = 'your parameter is wrong, please re-check it!'
+    logflyErrorMessage = 'your parameter is wrong, please re-check it! \r\nAnd you can see the manual at ' \
+                         'https://github.com/tinqlo/logfly '
     write_log('logfly-log', 'CLI', 'error', logflyErrorMessage)
 
 
