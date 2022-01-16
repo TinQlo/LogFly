@@ -1,15 +1,16 @@
 #####################
 # Author: Yuki Sui
-# Date: 2021-12-25
-# Version: 1.5
+# Date: 2022-1-16
 #####################
 
 import time
+import shutil
 import os
 from pathlib import Path
 from colorama import init
 
 init(autoreset=True)
+__version__ = '1.6'
 
 
 def create_log_folder(folder_name, hidden):
@@ -40,8 +41,11 @@ def get_time(flag):
         return time.strftime("%H:%M:%S", time.localtime())
     elif flag == 'datetimefile':
         return time.strftime("%Y%m%d%H%M%S", time.localtime())
+    elif flag == 'timestamp':
+        return time.time()
 
 
+# noinspection PyTypeChecker
 def write_log(name, position, level, message, mode='add',
               folder_name='logflys', hidden='no', color='yes', str_message='yes'):
     global LOGFILE, LOGFILE2, logfolder, logfolder_hidden, LOGFILE_hidden
@@ -140,6 +144,12 @@ def write_log(name, position, level, message, mode='add',
             error()
     else:
         error()
+
+
+def mv_file(original_file_name, new_file_name, folder_name='mv_file'):
+    shutil.move(original_file_name, new_file_name)
+    message = 'File ' + original_file_name + ' moved to ' + new_file_name
+    write_log('logfly-log', 'CLI', 'error', message, folder_name=folder_name)
 
 
 def error():
