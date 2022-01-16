@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="logfly",
-    version="1.5",
+    version="1.6",
     author="Yuan Sui",
     author_email="orisui@icloud.com",
-    description="Aa simple log tool by python",
+    description="A simple log tool by python",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://about.guki.me",

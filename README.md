@@ -1,4 +1,4 @@
-# logfly  1.5  
+# logfly  1.6  
 ### a simple log tool by python  
 
 ## position  
