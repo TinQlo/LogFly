@@ -1,6 +1,6 @@
 #####################
 # Author: Yuki Sui
-# Date: 2022-1-16
+# Date: 2022-1-27
 #####################
 
 import time
@@ -10,7 +10,23 @@ from pathlib import Path
 from colorama import init
 
 init(autoreset=True)
-__version__ = '1.6'
+__version__ = '1.7'
+
+
+def create_file(pathfile='', filenname=''):
+    if pathfile is None:
+        return False
+    if not os.path.exists(pathfile):
+        os.makedirs(pathfile)
+    else:
+        pass
+    filepath = pathfile + filenname
+    if not os.path.isfile(filepath):
+        with open(filepath, 'w') as filefiletemp:
+            filefiletemp.write('')
+            filefiletemp.close()
+    else:
+        pass
 
 
 def create_log_folder(folder_name, hidden):
@@ -158,7 +174,12 @@ def error():
     write_log('logfly-log', 'CLI', 'error', logflyErrorMessage)
 
 
+'''
 if __name__ == '__main__':
+    path = '.\\'
+    create_file(path, 'test.test')
+
+    
     write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")
     write_log('Doctor Who', 'CLI', 'warning', "this is Doctor's log, only in CLI.")
     write_log('Doctor Who', 'CLI', 'error', "this is Doctor's log, only in CLI.")
@@ -176,4 +197,4 @@ if __name__ == '__main__':
     write_log('Tardis', 'fileCLI', 'info', "this is Tardis's log, in file and CLI.", hidden='yes')
     write_log('Tardis', 'file', 'info', "this is Tardis's log, only in file.", hidden='yes')
     write_log('Death', 'fileCLI', 'info', "this is Death's log, in file and CLI.",
-              mode='add', folder_name='death', hidden='yes')
+              mode='add', folder_name='death', hidden='yes')'''

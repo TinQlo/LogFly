@@ -1,4 +1,4 @@
-# logfly  1.6  
+# logfly  1.7  
 ### a simple log tool by python  
 
 ## position  
@@ -8,7 +8,7 @@ if use hidden, log will also appear in user/.1o9f1y folder
 ## How to  
 ### import  
     import logfly  
-### use  
+### use1  
     logfly.write_log('name', 'where', 'info', 'message', mode='add', folder_name='logflys', hidden='no', color='yes', str_message='yes')  
 
 ## Description  
@@ -25,6 +25,13 @@ if use hidden, log will also appear in user/.1o9f1y folder
     hidden: ('yes', 'no') default is 'no', means logfile will save a copy in user/.1o9f1y folder  
     color: ('yes', 'no') default is 'yes', means log will with color.  
     str_message: ('yes', 'no') default is 'yes', means log will print message with str()  
+
+###use2  
+    logfly.create_file(pathfile='', filenname='')  
+
+##Description  
+    pathfile is the file path that you want to create, must fill with //  
+    filenname is the file name that you want to create, must is with *.*  
 
 ## Example:  
 
