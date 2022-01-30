@@ -1,6 +1,6 @@
 #####################
 # Author: Yuki Sui
-# Date: 2022-1-27
+# Date: 2022-1-30
 #####################
 
 import time
@@ -10,7 +10,7 @@ from pathlib import Path
 from colorama import init
 
 init(autoreset=True)
-__version__ = '1.7'
+__version__ = '1.8'
 
 
 def create_file(pathfile='', filenname=''):
@@ -22,7 +22,7 @@ def create_file(pathfile='', filenname=''):
         pass
     filepath = pathfile + filenname
     if not os.path.isfile(filepath):
-        with open(filepath, 'w') as filefiletemp:
+        with open(filepath, 'w', encoding='utf-8') as filefiletemp:
             filefiletemp.write('')
             filefiletemp.close()
     else:
@@ -103,7 +103,7 @@ def write_log(name, position, level, message, mode='add',
             error()
     elif position == 'file':
         if mode == 'add':
-            File = open(LOGFILE, 'a', newline='')
+            File = open(LOGFILE, 'a', newline='', encoding='utf-8')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
             if hidden == 'yes':
@@ -112,12 +112,12 @@ def write_log(name, position, level, message, mode='add',
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
         elif mode == 'new':
-            File = open(LOGFILE, 'w', newline='')
+            File = open(LOGFILE, 'w', newline='', encoding='utf-8')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
             if hidden == 'yes':
                 LOGFILE2 = logfolder_hidden + LOGFILE_hidden
-                File = open(LOGFILE2, 'a', newline='')
+                File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
         else:
@@ -139,21 +139,21 @@ def write_log(name, position, level, message, mode='add',
         else:
             error()
         if mode == 'add':
-            File = open(LOGFILE, 'a', newline='')
+            File = open(LOGFILE, 'a', newline='', encoding='utf-8')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
             if hidden == 'yes':
                 LOGFILE2 = logfolder_hidden + LOGFILE_hidden
-                File = open(LOGFILE2, 'a', newline='')
+                File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
         elif mode == 'new':
-            File = open(LOGFILE, 'w', newline='')
+            File = open(LOGFILE, 'w', newline='', encoding='utf-8')
             File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
             File.close()
             if hidden == 'yes':
                 LOGFILE2 = logfolder_hidden + LOGFILE_hidden
-                File = open(LOGFILE2, 'a', newline='')
+                File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
         else:
@@ -174,27 +174,5 @@ def error():
     write_log('logfly-log', 'CLI', 'error', logflyErrorMessage)
 
 
-'''
 if __name__ == '__main__':
-    path = '.\\'
-    create_file(path, 'test.test')
-
-    
-    write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")
-    write_log('Doctor Who', 'CLI', 'warning', "this is Doctor's log, only in CLI.")
-    write_log('Doctor Who', 'CLI', 'error', "this is Doctor's log, only in CLI.")
-    write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, in file and CLI.", mode='add')
-    write_log('Doctor Who', 'file', 'info', "this is Doctor's log, only in file.")
-    write_log('Tardis', 'CLI', 'info', "this is Tardis's log, only in CLI.")
-    write_log('Tardis', 'fileCLI', 'info', "this is Tardis's log, in file and CLI.")
-    write_log('Tardis', 'file', 'info', "this is Tardis's log, only in file.")
-    write_log('Death', 'fileCLI', 'info', "this is Death's log, in file and CLI.", mode='add', folder_name='death')
-
-    write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.", hidden='yes')
-    write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, in file and CLI.", mode='add', hidden='yes')
-    write_log('Doctor Who', 'file', 'info', "this is Doctor's log, only in file.", hidden='yes')
-    write_log('Tardis', 'CLI', 'info', "this is Tardis's log, only in CLI.", hidden='yes')
-    write_log('Tardis', 'fileCLI', 'info', "this is Tardis's log, in file and CLI.", hidden='yes')
-    write_log('Tardis', 'file', 'info', "this is Tardis's log, only in file.", hidden='yes')
-    write_log('Death', 'fileCLI', 'info', "this is Death's log, in file and CLI.",
-              mode='add', folder_name='death', hidden='yes')'''
+    write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, only in CLI.")

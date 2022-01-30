@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="logfly",
-    version="1.7",
+    version="1.8",
     author="Yuan Sui",
     author_email="orisui@icloud.com",
     description="A simple log tool by python",
