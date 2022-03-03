@@ -1,4 +1,4 @@
-# logfly  1.8  
+# logfly  1.9  
 ### a simple log tool by python  
 
 ## position  
@@ -27,48 +27,12 @@ if use hidden, log will also appear in user/.1o9f1y folder
     str_message: ('yes', 'no') default is 'yes', means log will print message with str()  
 
 ###use2  
-    logfly.create_file(pathfile='', filenname='')  
+    lcreate_or_check_file(pathorfile, name, warning='Yes'): 
+        create or check file.  
+        pathorfile: (any str) path or file name.  
+        name: (any str) file or path name.  
+        if warning is 'Yes', will print warning message if file is exist.  
 
 ##Description  
     pathfile is the file path that you want to create, must fill with //  
     filenname is the file name that you want to create, must is with *.*  
-
-## Example:  
-
-### both file and CLI code  
-    logfly.write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, in file and CLI.")  
-#### in CLI  
-    2021-07-29 20:39:07 [INFO] this is Doctor's log, in file and CLI.  
-#### in file (logs/logflys/[date]/Doctor Who-2021-07-29.log)  
-    2021-07-29 20:39:07 [INFO] this is Doctor's log, in file and CLI.  
-  
-### only in CLI code
-    logfly.write_log('Doctor Who', 'CLI', 'info', "this is Doctor's log, only in CLI.")  
-#### in CLI  
-    2021-07-29 20:39:07 [INFO] this is Doctor's log, only in CLI.  
-#### in file  
-    None
-
-### only in file code  
-    logfly.write_log('Doctor Who', 'file', 'info', "this is Doctor's log, only in file.")  
-#### in CLI  
-    None  
-#### in file (logs/logflys/[date]/Doctor Who-2021-07-29.log)  
-    2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.  
-
-#### mode arg:
-    logfly.write_log('Doctor Who', 'file', 'info', "this is Doctor's log, only in file.", mode='new')
-#### in CLI:
-    2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.
-#### infile(logs//logflys[date]/Doctor Who-20210801165807.log):  
-#### p.s.  log will name in date + time  
-
-    2021-07-29 20:40:03 [INFO] this is Doctor's log, only in file.  
-
-#### folder arg:
-    write_log('Death Stranding', 'fileCLI', 'info', "this is Death Stranding's log, in file and CLI.", mode='add',folder_name='games')
-#### in CLI:
-    2021-11-10 21:27:55 [INFO] this is Death Stranding's log, in file and CLI.
-#### infile(logs/games/[date]/Death Stranding-20210801165807.log):
-
-    2021-11-10 21:27:55 [INFO] this is Death Stranding's log, in file and CLI.

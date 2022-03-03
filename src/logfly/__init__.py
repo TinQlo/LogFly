@@ -10,23 +10,31 @@ from pathlib import Path
 from colorama import init
 
 init(autoreset=True)
-__version__ = '1.8'
+__version__ = '1.9'
 
 
-def create_file(pathfile='', filenname=''):
-    if pathfile is None:
-        return False
-    if not os.path.exists(pathfile):
-        os.makedirs(pathfile)
-    else:
-        pass
-    filepath = pathfile + filenname
-    if not os.path.isfile(filepath):
-        with open(filepath, 'w', encoding='utf-8') as filefiletemp:
-            filefiletemp.write('')
-            filefiletemp.close()
-    else:
-        pass
+def create_or_check_file(pathorfile, name, warning='Yes'):
+    try:
+        if pathorfile == 'file':
+            if not os.path.exists(name):
+                with open(name, 'w', encoding='utf-8') as f:
+                    f.write('')
+                    f.close()
+                    write_log('logfly-log', 'CLI', 'info', 'File ' + name + ' created!')
+        elif pathorfile == 'path':
+            if not os.path.exists(name):
+                os.makedirs(name)
+                write_log('logfly-log', 'CLI', 'info', 'Path ' + name + ' created!')
+        else:
+            raise ParameterERROR('function create_or_check_file Parameter error! pathorfile must be "file" or "path"! ')
+        if warning == 'yes':
+            write_log('logfly-log', 'CLI', 'warning', 'File(path) ' + name + ' already exists!')
+        elif warning == 'no':
+            pass
+        else:
+            raise ParameterERROR('function create_or_check_file Parameter error! warning must be "yes" or "no"! ')
+    except Exception as e:
+        error(e)
 
 
 def create_log_folder(folder_name, hidden):
@@ -49,117 +57,138 @@ def create_log_folder(folder_name, hidden):
 
 
 def get_time(flag):
-    if flag == 'datetime':
-        return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    elif flag == 'date':
-        return time.strftime("%Y-%m-%d", time.localtime())
-    elif flag == 'times':
-        return time.strftime("%H:%M:%S", time.localtime())
-    elif flag == 'datetimefile':
-        return time.strftime("%Y%m%d%H%M%S", time.localtime())
-    elif flag == 'timestamp':
-        return time.time()
+    try:
+        if flag == 'datetime':
+            return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        elif flag == 'date':
+            return time.strftime("%Y-%m-%d", time.localtime())
+        elif flag == 'times':
+            return time.strftime("%H:%M:%S", time.localtime())
+        elif flag == 'datetimefile':
+            return time.strftime("%Y%m%d%H%M%S", time.localtime())
+        elif flag == 'timestamp':
+            return time.time()
+        else:
+            raise ParameterERROR('function get_time Parameter error! flag must be "datetime", "date", "times", '
+                                 '"datetimefile","timestamp"! ')
+    except Exception as e:
+        error(e)
 
 
 # noinspection PyTypeChecker
 def write_log(name, position, level, message, mode='add',
               folder_name='logflys', hidden='no', color='yes', str_message='yes'):
     global LOGFILE, LOGFILE2, logfolder, logfolder_hidden, LOGFILE_hidden
-    if str_message == 'yes':
-        message = str(message)
-    elif str_message == 'no':
-        pass
-    else:
-        error()
-    if hidden == "no":
-        logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
-    elif hidden == 'yes':
-        logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
-        logfolder_hidden = str(Path.home()) + '\\.1o9f1y\\' + folder_name + '\\' + get_time('date') + '\\'
-    if mode == 'add':
-        LOGFILE_hidden = name + '-' + get_time('date') + '.log'
-        LOGFILE = logfolder + name + '-' + get_time('date') + '.log'
-    elif mode == 'new':
-        LOGFILE_hidden = name + '-' + get_time('datetimefile') + '.log'
-        LOGFILE = logfolder + name + '-' + get_time('datetimefile') + '.log'
-    else:
-        error()
-    create_log_folder(folder_name, hidden)
-    if position == 'CLI':
-        if color == 'no':
-            print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-        elif color == 'yes':
-            LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
-                            '\r\n '
-            if str.upper(level) == 'INFO':
-                print(f'\033[0;34m{LogFlyMessage}\033[0m')
-            elif str.upper(level) == 'WARNING':
-                print(f'\033[0;33m{LogFlyMessage}\033[0m')
-            elif str.upper(level) == 'ERROR':
-                print(f'\033[0;31m{LogFlyMessage}\033[0m')
-            else:
-                print(f'\033[0;37m{LogFlyMessage}\033[0m')
+    try:
+        if str_message == 'yes':
+            message = str(message)
+        elif str_message == 'no':
+            pass
         else:
-            error()
-    elif position == 'file':
+            raise ParameterERROR('function write_log Parameter error! str_message must be "yes" or "no"! ')
+        if hidden == "no":
+            logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
+        elif hidden == 'yes':
+            logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
+            logfolder_hidden = str(Path.home()) + '\\.1o9f1y\\' + folder_name + '\\' + get_time('date') + '\\'
+            create_log_folder(folder_name, hidden)
+        else:
+            raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
         if mode == 'add':
-            File = open(LOGFILE, 'a', newline='', encoding='utf-8')
-            File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-            File.close()
-            if hidden == 'yes':
-                LOGFILE2 = logfolder_hidden + LOGFILE_hidden
-                File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
-                File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-                File.close()
+            LOGFILE_hidden = name + '-' + get_time('date') + '.log'
+            LOGFILE = logfolder + name + '-' + get_time('date') + '.log'
         elif mode == 'new':
-            File = open(LOGFILE, 'w', newline='', encoding='utf-8')
-            File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-            File.close()
-            if hidden == 'yes':
-                LOGFILE2 = logfolder_hidden + LOGFILE_hidden
-                File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
-                File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-                File.close()
+            LOGFILE_hidden = name + '-' + get_time('datetimefile') + '.log'
+            LOGFILE = logfolder + name + '-' + get_time('datetimefile') + '.log'
         else:
-            error()
-    elif position == 'fileCLI':
-        if color == 'no':
-            print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-        elif color == 'yes':
-            LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
-                            '\r\n '
-            if str.upper(level) == 'INFO':
-                print(f'\033[0;34m{LogFlyMessage}\033[0m')
-            elif str.upper(level) == 'WARNING':
-                print(f'\033[0;33m{LogFlyMessage}\033[0m')
-            elif str.upper(level) == 'ERROR':
-                print(f'\033[0;31m{LogFlyMessage}\033[0m')
+            raise ParameterERROR('function write_log Parameter error! mode must be "add" or "new"! ')
+        if position == 'CLI':
+            if color == 'no':
+                print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+            elif color == 'yes':
+                LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
+                                '\r\n '
+                if str.upper(level) == 'INFO':
+                    print(f'\033[0;34m{LogFlyMessage}\033[0m')
+                elif str.upper(level) == 'WARNING':
+                    print(f'\033[0;33m{LogFlyMessage}\033[0m')
+                elif str.upper(level) == 'ERROR':
+                    print(f'\033[0;31m{LogFlyMessage}\033[0m')
+                else:
+                    print(f'\033[0;37m{LogFlyMessage}\033[0m')
             else:
-                print(f'\033[0;37m{LogFlyMessage}\033[0m')
-        else:
-            error()
-        if mode == 'add':
-            File = open(LOGFILE, 'a', newline='', encoding='utf-8')
-            File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-            File.close()
-            if hidden == 'yes':
-                LOGFILE2 = logfolder_hidden + LOGFILE_hidden
-                File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
+                raise ParameterERROR('function write_log Parameter error! color must be "yes" or "no"! ')
+        elif position == 'file':
+            if mode == 'add':
+                File = open(LOGFILE, 'a', newline='', encoding='utf-8')
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
-        elif mode == 'new':
-            File = open(LOGFILE, 'w', newline='', encoding='utf-8')
-            File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
-            File.close()
-            if hidden == 'yes':
-                LOGFILE2 = logfolder_hidden + LOGFILE_hidden
-                File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
+                if hidden == 'yes':
+                    LOGFILE2 = logfolder_hidden + LOGFILE_hidden
+                    File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
+                    File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+                    File.close()
+                else:
+                    raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
+            elif mode == 'new':
+                File = open(LOGFILE, 'w', newline='', encoding='utf-8')
                 File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                 File.close()
+                if hidden == 'yes':
+                    LOGFILE2 = logfolder_hidden + LOGFILE_hidden
+                    File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
+                    File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+                    File.close()
+                elif hidden == 'no':
+                    pass
+                else:
+                    raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
+        elif position == 'fileCLI':
+            if color == 'no':
+                print(name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+            elif color == 'yes':
+                LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
+                                '\r\n '
+                if str.upper(level) == 'INFO':
+                    print(f'\033[0;34m{LogFlyMessage}\033[0m')
+                elif str.upper(level) == 'WARNING':
+                    print(f'\033[0;33m{LogFlyMessage}\033[0m')
+                elif str.upper(level) == 'ERROR':
+                    print(f'\033[0;31m{LogFlyMessage}\033[0m')
+                else:
+                    print(f'\033[0;37m{LogFlyMessage}\033[0m')
+            else:
+                raise ParameterERROR('function write_log Parameter error! color must be "yes" or "no"! ')
+            if mode == 'add':
+                File = open(LOGFILE, 'a', newline='', encoding='utf-8')
+                File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+                File.close()
+                if hidden == 'yes':
+                    LOGFILE2 = logfolder_hidden + LOGFILE_hidden
+                    File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
+                    File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+                    File.close()
+                elif hidden == 'no':
+                    pass
+                else:
+                    raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
+            elif mode == 'new':
+                File = open(LOGFILE, 'w', newline='', encoding='utf-8')
+                File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+                File.close()
+                if hidden == 'yes':
+                    LOGFILE2 = logfolder_hidden + LOGFILE_hidden
+                    File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
+                    File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
+                    File.close()
+                elif hidden == 'no':
+                    pass
+            else:
+                raise ParameterERROR('function write_log Parameter error! mode must be "add" or "new"! ')
         else:
-            error()
-    else:
-        error()
+            raise ParameterERROR('function write_log Parameter error! position must be "file" or "fileCLI"! ')
+    except Exception as e:
+        error(e, 'only print')
 
 
 def mv_file(original_file_name, new_file_name, folder_name='mv_file'):
@@ -168,11 +197,20 @@ def mv_file(original_file_name, new_file_name, folder_name='mv_file'):
     write_log('logfly-log', 'CLI', 'error', message, folder_name=folder_name)
 
 
-def error():
-    logflyErrorMessage = 'your parameter is wrong, please re-check it! \r\nAnd you can see the manual at ' \
-                         'https://github.com/tinqlo/logfly '
-    write_log('logfly-log', 'CLI', 'error', logflyErrorMessage)
+def error(exp, mode='logfly'):
+    if mode == 'logfly':
+        logflyErrorMessage = 'ERROR occurred!\r\n\r\n' + str(
+            exp) + "\r\n\r\nplease re-check it! \r\nAnd you can see the " \
+                   "manual at " \
+                   "https://github.com/tinqlo/logfly "
+        write_log('logfly-log', 'CLI', 'error', logflyErrorMessage)
+    elif mode == 'only print':
+        print('ERROR occurred!\r\n\r\n' + str(exp) + "\r\n\r\nplease re-check it! \r\nAnd you can see the "
+                                                     "manual at " \
+                                                     "https://github.com/tinqlo/logfly ")
 
 
-if __name__ == '__main__':
-    write_log('Doctor Who', 'fileCLI', 'info', "this is Doctor's log, only in CLI.")
+class ParameterERROR(Exception):
+    def __init__(self, message):
+        self.message = message
+
