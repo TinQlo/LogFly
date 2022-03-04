@@ -1,17 +1,17 @@
-# logfly  1.9  
-### a simple log tool by python  
+# logfly  2.0  
+### a simple log tool by python.  
 
 ## position  
 log will create in ./logs/[folder_name]/[date] folder.  
-if use hidden, log will also appear in user/.1o9f1y folder  
+if use hidden, log will also appear in user/.1o9f1y folder.  
 
 ## How to  
 ### import  
     import logfly  
-### use1  
+### write log    
     logfly.write_log('name', 'where', 'info', 'message', mode='add', folder_name='logflys', hidden='no', color='yes', str_message='yes')  
 
-## Description  
+#### Description  
     name: (any str) logfile name, you can use diffrent string to create diffrent logfile.  
     where: ('CLI', 'fileCLI', 'file') position where log appear.  
             fileCLI means log will appear in command line window and log file.  
@@ -26,13 +26,13 @@ if use hidden, log will also appear in user/.1o9f1y folder
     color: ('yes', 'no') default is 'yes', means log will with color.  
     str_message: ('yes', 'no') default is 'yes', means log will print message with str()  
 
-###use2  
-    lcreate_or_check_file(pathorfile, name, warning='Yes'): 
+### use2  
+    create_or_check_file(pathorfile, name, warning='yes'): 
         create or check file.  
-        pathorfile: (any str) path or file name.  
+        pathorfile: ('file', 'path') choose to create file or path.  
         name: (any str) file or path name.  
-        if warning is 'Yes', will print warning message if file is exist.  
+        if warning is 'yes', will print warning message if file or path is exist.  
 
-##Description  
-    pathfile is the file path that you want to create, must fill with //  
-    filenname is the file name that you want to create, must is with *.*  
+#### Description  
+    pathfile is the file path that you want to create, must fill with '//'  
+    filenname is the file name that you want to create, must is with '*.*'  

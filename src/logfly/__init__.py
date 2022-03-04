@@ -1,6 +1,6 @@
 #####################
 # Author: Yuki Sui
-# Date: 2022-1-30
+# Date: 2022-3-4
 #####################
 
 import time
@@ -10,10 +10,10 @@ from pathlib import Path
 from colorama import init
 
 init(autoreset=True)
-__version__ = '1.9'
+__version__ = '2.0'
 
 
-def create_or_check_file(pathorfile, name, warning='Yes'):
+def create_or_check_file(pathorfile, name, warning='yes'):
     try:
         if pathorfile == 'file':
             if not os.path.exists(name):
@@ -34,7 +34,8 @@ def create_or_check_file(pathorfile, name, warning='Yes'):
         else:
             raise ParameterERROR('function create_or_check_file Parameter error! warning must be "yes" or "no"! ')
     except Exception as e:
-        error(e)
+        linenum = e.__traceback__.tb_lineno
+        error(e, linenum)
 
 
 def create_log_folder(folder_name, hidden):
@@ -72,7 +73,27 @@ def get_time(flag):
             raise ParameterERROR('function get_time Parameter error! flag must be "datetime", "date", "times", '
                                  '"datetimefile","timestamp"! ')
     except Exception as e:
-        error(e)
+        linenum = e.__traceback__.tb_lineno
+        error(e, linenum)
+
+
+def time_transfer(time_stamp, flag='timestamp2datetime'):
+    try:
+        if flag == 'timestamp2datetime':
+            if len(str(time_stamp)) == 10:
+                return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_stamp))
+            elif len(str(time_stamp)) == 13:
+                return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_stamp / 1000))
+            else:
+                raise ParameterERROR('function time_transfer Parameter error! time_stamp must be 10 bits or 13 bits! ')
+        elif flag == 'datetime2timestamp':
+            return time.mktime(time.strptime(time_stamp, "%Y-%m-%d %H:%M:%S"))
+        else:
+            raise ParameterERROR('function time_transfer Parameter error! flag must be "timestamp2datetime" or '
+                                 '"datetime2timestamp"! ')
+    except Exception as e:
+        linenum = e.__traceback__.tb_lineno
+        error(e, linenum)
 
 
 # noinspection PyTypeChecker
@@ -188,7 +209,8 @@ def write_log(name, position, level, message, mode='add',
         else:
             raise ParameterERROR('function write_log Parameter error! position must be "file" or "fileCLI"! ')
     except Exception as e:
-        error(e, 'only print')
+        linenum = e.__traceback__.tb_lineno
+        error(e, linenum, 'only print')
 
 
 def mv_file(original_file_name, new_file_name, folder_name='mv_file'):
@@ -197,9 +219,9 @@ def mv_file(original_file_name, new_file_name, folder_name='mv_file'):
     write_log('logfly-log', 'CLI', 'error', message, folder_name=folder_name)
 
 
-def error(exp, mode='logfly'):
+def error(exp,linenum, mode='logfly'):
     if mode == 'logfly':
-        logflyErrorMessage = 'ERROR occurred!\r\n\r\n' + str(
+        logflyErrorMessage = 'ERROR occurred! at row ' + str(linenum) + '\r\n\r\n' + str(
             exp) + "\r\n\r\nplease re-check it! \r\nAnd you can see the " \
                    "manual at " \
                    "https://github.com/tinqlo/logfly "
@@ -213,4 +235,3 @@ def error(exp, mode='logfly'):
 class ParameterERROR(Exception):
     def __init__(self, message):
         self.message = message
-
