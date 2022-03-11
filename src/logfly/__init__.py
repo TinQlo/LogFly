@@ -1,6 +1,6 @@
 #####################
 # Author: Yuki Sui
-# Date: 2022-3-4
+# Date: 2022-3-11
 #####################
 
 import time
@@ -10,7 +10,7 @@ from pathlib import Path
 from colorama import init
 
 init(autoreset=True)
-__version__ = '2.0'
+__version__ = '2.1'
 
 
 def create_or_check_file(pathorfile, name, warning='yes'):
@@ -38,7 +38,7 @@ def create_or_check_file(pathorfile, name, warning='yes'):
         error(e, linenum)
 
 
-def create_log_folder(folder_name, hidden):
+def create_log_folder(folder_name, hidden='no'):
     dirs = '.\\logs\\'
     dirs2 = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
     dirs3 = str(Path.home()) + '\\.1o9f1y\\' + folder_name + '\\' + get_time('date') + '\\'
@@ -98,9 +98,10 @@ def time_transfer(time_stamp, flag='timestamp2datetime'):
 
 # noinspection PyTypeChecker
 def write_log(name, position, level, message, mode='add',
-              folder_name='logflys', hidden='no', color='yes', str_message='yes'):
+              folder_name='default-log', hidden='no', color='yes', str_message='yes'):
     global LOGFILE, LOGFILE2, logfolder, logfolder_hidden, LOGFILE_hidden
     try:
+        create_log_folder(folder_name)
         if str_message == 'yes':
             message = str(message)
         elif str_message == 'no':
@@ -235,3 +236,7 @@ def error(exp,linenum, mode='logfly'):
 class ParameterERROR(Exception):
     def __init__(self, message):
         self.message = message
+
+
+if __name__ == '__main__':
+    write_log('logfly-log', 'fileCLI', 'error', 'test', hidden='yes')
