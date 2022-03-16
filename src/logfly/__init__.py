@@ -1,6 +1,6 @@
 #####################
 # Author: Yuki Sui
-# Date: 2022-3-11
+# Date: 2022-3-16
 #####################
 
 import time
@@ -10,7 +10,7 @@ from pathlib import Path
 from colorama import init
 
 init(autoreset=True)
-__version__ = '2.1'
+__version__ = '2.2'
 
 
 def create_or_check_file(pathorfile, name, warning='yes'):
@@ -107,6 +107,8 @@ def write_log(name, position, level, message, mode='add',
         elif str_message == 'no':
             pass
         else:
+            mesg = str(message) + '\r\n\r\n'
+            print(mesg)
             raise ParameterERROR('function write_log Parameter error! str_message must be "yes" or "no"! ')
         if hidden == "no":
             logfolder = '.\\logs\\' + folder_name + '\\' + get_time('date') + '\\'
@@ -115,6 +117,8 @@ def write_log(name, position, level, message, mode='add',
             logfolder_hidden = str(Path.home()) + '\\.1o9f1y\\' + folder_name + '\\' + get_time('date') + '\\'
             create_log_folder(folder_name, hidden)
         else:
+            mesg = str(message) + '\r\n\r\n'
+            print(mesg)
             raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
         if mode == 'add':
             LOGFILE_hidden = name + '-' + get_time('date') + '.log'
@@ -123,6 +127,8 @@ def write_log(name, position, level, message, mode='add',
             LOGFILE_hidden = name + '-' + get_time('datetimefile') + '.log'
             LOGFILE = logfolder + name + '-' + get_time('datetimefile') + '.log'
         else:
+            mesg = str(message) + '\r\n\r\n'
+            print(mesg)
             raise ParameterERROR('function write_log Parameter error! mode must be "add" or "new"! ')
         if position == 'CLI':
             if color == 'no':
@@ -139,6 +145,8 @@ def write_log(name, position, level, message, mode='add',
                 else:
                     print(f'\033[0;37m{LogFlyMessage}\033[0m')
             else:
+                mesg = str(message) + '\r\n\r\n'
+                print(mesg)
                 raise ParameterERROR('function write_log Parameter error! color must be "yes" or "no"! ')
         elif position == 'file':
             if mode == 'add':
@@ -151,6 +159,8 @@ def write_log(name, position, level, message, mode='add',
                     File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                     File.close()
                 else:
+                    mesg = str(message) + '\r\n\r\n'
+                    print(mesg)
                     raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
             elif mode == 'new':
                 File = open(LOGFILE, 'w', newline='', encoding='utf-8')
@@ -164,6 +174,8 @@ def write_log(name, position, level, message, mode='add',
                 elif hidden == 'no':
                     pass
                 else:
+                    mesg = str(message) + '\r\n\r\n'
+                    print(mesg)
                     raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
         elif position == 'fileCLI':
             if color == 'no':
@@ -180,6 +192,8 @@ def write_log(name, position, level, message, mode='add',
                 else:
                     print(f'\033[0;37m{LogFlyMessage}\033[0m')
             else:
+                mesg = str(message) + '\r\n\r\n'
+                print(mesg)
                 raise ParameterERROR('function write_log Parameter error! color must be "yes" or "no"! ')
             if mode == 'add':
                 File = open(LOGFILE, 'a', newline='', encoding='utf-8')
@@ -193,6 +207,8 @@ def write_log(name, position, level, message, mode='add',
                 elif hidden == 'no':
                     pass
                 else:
+                    mesg = str(message) + '\r\n\r\n'
+                    print(mesg)
                     raise ParameterERROR('function write_log Parameter error! hidden must be "no" or "yes"! ')
             elif mode == 'new':
                 File = open(LOGFILE, 'w', newline='', encoding='utf-8')
@@ -206,8 +222,12 @@ def write_log(name, position, level, message, mode='add',
                 elif hidden == 'no':
                     pass
             else:
+                mesg = str(message) + '\r\n\r\n'
+                print(mesg)
                 raise ParameterERROR('function write_log Parameter error! mode must be "add" or "new"! ')
         else:
+            mesg = str(message) + '\r\n\r\n'
+            print(mesg)
             raise ParameterERROR('function write_log Parameter error! position must be "file" or "fileCLI"! ')
     except Exception as e:
         linenum = e.__traceback__.tb_lineno
