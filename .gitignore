@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *class java.lang.String
 
+test_logfly.py
+
 # C extensions
 *.so
 

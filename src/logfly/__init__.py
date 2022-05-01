@@ -1,6 +1,6 @@
 #####################
 # Author: Yuki Sui
-# Date: 2022-4-1
+# Date: 2022-5-1
 #####################
 
 import time
@@ -10,16 +10,16 @@ from pathlib import Path
 try:
     from colorama import init
     __colorama_init__ = True
-except Exception:
+except ModuleNotFoundError:
     __colorama_init__ = False
     pass
 
-if __colorama_init__ == True:
+if __colorama_init__:
     init(autoreset=True)
 else:
     pass
 
-__version__ = '2.3'
+__version__ = '2.4'
 
 
 def create_or_check_file(pathorfile, name, warning='yes'):
@@ -145,13 +145,15 @@ def write_log(name, position, level, message, mode='add',
             elif color == 'yes':
                 LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
                                 '\r\n '
-                if __colorama_init__ == True:
+                if __colorama_init__:
                     if str.upper(level) == 'INFO':
                         print(f'\033[0;34m{LogFlyMessage}\033[0m')
                     elif str.upper(level) == 'WARNING':
                         print(f'\033[0;33m{LogFlyMessage}\033[0m')
                     elif str.upper(level) == 'ERROR':
                         print(f'\033[0;31m{LogFlyMessage}\033[0m')
+                    elif str.upper(level) == 'PASS':
+                        print(f'\033[0;32m{LogFlyMessage}\033[0m')
                     else:
                         print(f'\033[0;37m{LogFlyMessage}\033[0m')
                 else:
@@ -195,13 +197,15 @@ def write_log(name, position, level, message, mode='add',
             elif color == 'yes':
                 LogFlyMessage = name + ' ' + get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + \
                                 '\r\n '
-                if __colorama_init__ == True:
+                if __colorama_init__:
                     if str.upper(level) == 'INFO':
                         print(f'\033[0;34m{LogFlyMessage}\033[0m')
                     elif str.upper(level) == 'WARNING':
                         print(f'\033[0;33m{LogFlyMessage}\033[0m')
                     elif str.upper(level) == 'ERROR':
                         print(f'\033[0;31m{LogFlyMessage}\033[0m')
+                    elif str.upper(level) == 'PASS':
+                        print(f'\033[0;32m{LogFlyMessage}\033[0m')
                     else:
                         print(f'\033[0;37m{LogFlyMessage}\033[0m')
                 else:
@@ -274,4 +278,4 @@ class ParameterERROR(Exception):
 
 
 if __name__ == '__main__':
-    write_log('logfly-log', 'CLI', 'error', 'test', hidden='yes')
+    write_log('logfly-log', 'CLI', 'pass', 'test', hidden='yes')
