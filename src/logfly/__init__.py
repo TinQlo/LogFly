@@ -272,6 +272,16 @@ def error(exp,linenum, mode='logfly'):
                                                      "https://github.com/tinqlo/logfly ")
 
 
+def mk_mt():
+    # TODO: add a simple multi thread tool, make user create multi thread simple. rewrite thread.run method.
+    pass
+
+
+def mk_mp():
+    # TODO: add a simple multi process tool, make user create multi process simple. studying...
+    pass
+
+
 class ParameterERROR(Exception):
     def __init__(self, message):
         self.message = message
