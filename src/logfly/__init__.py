@@ -1,14 +1,17 @@
 #####################
 # Author: Yuki Sui
-# Date: 2022-5-1
+# Date: 2023-8-7
 #####################
 
 import time
 import shutil
 import os
 from pathlib import Path
+import subprocess
+
 try:
     from colorama import init
+
     __colorama_init__ = True
 except ModuleNotFoundError:
     __colorama_init__ = False
@@ -19,7 +22,7 @@ if __colorama_init__:
 else:
     pass
 
-__version__ = '2.4'
+__version__ = '2.5'
 
 
 def create_or_check_file(pathorfile, name, warning='yes'):
@@ -172,6 +175,8 @@ def write_log(name, position, level, message, mode='add',
                     File = open(LOGFILE2, 'a', newline='', encoding='utf-8')
                     File.write(get_time('datetime') + ' ' + '[' + str.upper(level) + ']' + ' ' + message + '\r\n')
                     File.close()
+                elif hidden == 'no':
+                    pass
                 else:
                     mesg = str(message) + '\r\n\r\n'
                     print(mesg)
@@ -259,7 +264,25 @@ def mv_file(original_file_name, new_file_name, folder_name='mv_file'):
     write_log('logfly-log', 'CLI', 'error', message, folder_name=folder_name)
 
 
-def error(exp,linenum, mode='logfly'):
+def run_cmd(cmd):
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    while True:
+        result = p.stdout.readline()  # 默认获取到的是二进制内容
+        if result != b'':  # 获取内容不为空时
+            try:
+                print(result.decode('gbk').strip('\r\n'))  # 处理GBK编码的输出，去掉结尾换行
+                write_log('logfly-log', 'file', 'info', message=result.decode('gbk').strip('\r\n'))
+                return result.decode('gbk').strip('\r\n')
+            except Exception as e:
+                print(e)
+                print(result.decode('utf-8').strip('\r\n'))  # 如果GBK解码失败再尝试UTF-8解码
+                write_log('logfly-log', 'file', 'info', message=result.decode('utf-8').strip('\r\n'))
+                return result.decode('utf-8').strip('\r\n')
+        else:
+            break
+
+
+def error(exp, linenum, mode='logfly'):
     if mode == 'logfly':
         logflyErrorMessage = 'ERROR occurred! at row ' + str(linenum) + '\r\n\r\n' + str(
             exp) + "\r\n\r\nplease re-check it! \r\nAnd you can see the " \
@@ -278,4 +301,5 @@ class ParameterERROR(Exception):
 
 
 if __name__ == '__main__':
-    write_log('logfly-log', 'CLI', 'pass', 'test', hidden='yes')
+    # write_log('logfly-log', 'CLI', 'pass', 'test', hidden='yes')
+    run_cmd("echo 111111")
